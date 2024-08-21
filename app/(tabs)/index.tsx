@@ -6,20 +6,26 @@ import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import axios from "axios";
 import { useState } from "react";
+import { image } from "@/components/img";
 
 export default function HomeScreen() {
   const [response, setResponse] = useState(null);
   const [loading, setLoading] = useState(false);
-  async function generate() {
+  interface AIPromptConfig {
+    model: string;
+    stream: boolean;
+    prompt: string;
+    format?: "json";
+    system?: string;
+    images?: string[];
+  }
+  async function generate(config: AIPromptConfig) {
     try {
       setLoading(true);
-      const res = await axios.post("http://192.168.0.14:11434/api/generate", {
-        model: "llava",
-        stream: false,
-        prompt:
-          "do you know nurture by porter robinson? Respond using JSON, in a property called text",
-        format: "json",
-      });
+      const res = await axios.post(
+        "http://192.168.0.24:11434/api/generate",
+        config
+      );
 
       console.log(res.data.response);
       setResponse(JSON.parse(res.data.response).text);
@@ -28,6 +34,18 @@ export default function HomeScreen() {
       console.error(e);
     }
   }
+
+  function generateResponse() {
+    generate({
+      model: "llava",
+      stream: false,
+      prompt:
+        "what do you see in this image? Respond using JSON, in a property called text. For example, {text: 'I see a cat.'}. If you don't follow this format, the app will break.",
+      format: "json",
+      images: [image],
+    });
+  }
+
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: "#A1CEDC", dark: "#1D3D47" }}
@@ -72,7 +90,7 @@ export default function HomeScreen() {
           <ThemedText type="defaultSemiBold">app-example</ThemedText>.
         </ThemedText>
 
-        <Button onPress={generate} title="Generate" />
+        <Button onPress={generateResponse} title="Generate" />
         {loading && <ThemedText type="defaultSemiBold">Loading...</ThemedText>}
         {response && <ThemedText type="defaultSemiBold">{response}</ThemedText>}
       </ThemedView>
