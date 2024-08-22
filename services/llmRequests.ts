@@ -9,6 +9,7 @@ async function generate(config: AIPromptConfig) {
   try {
     const res = await api.post("api/generate", config);
 
+    console.log(res.data);
     console.log(JSON.parse(res.data.response));
 
     return [JSON.parse(res.data.response)] as RecipePrediction[];
@@ -19,9 +20,9 @@ async function generate(config: AIPromptConfig) {
 
 export default async function analyzeImage(image: string) {
   return generate({
-    model: "llava",
+    model: "llava:13b",
     stream: false,
-    prompt: "Analyze the following image.",
+    prompt: "Identify the recipe depicted in the image provided by the user.",
     format: "json",
     images: [image],
     system: foodPredictionSystemPrompt,

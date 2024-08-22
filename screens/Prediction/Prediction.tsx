@@ -1,6 +1,9 @@
-import SafeArea from "@/components/SafeArea";
-import { Image, Text } from "react-native";
+import { Text } from "react-native";
 import { usePredictionService } from "./Prediction.service";
+import { Container, ContentContainer, HeaderImage } from "./Prediction.style";
+import PredictionLoader from "./Loader/Loader";
+import Recipe from "./Recipe/Recipe";
+import { mockRecipePrediction } from "@/constants/mocks";
 
 export default function PredictionScreen({ image }: { image: string }) {
   const imageBase64 = `data:image/jpeg;base64,${image}`;
@@ -8,34 +11,20 @@ export default function PredictionScreen({ image }: { image: string }) {
   const { loading, prediction } = usePredictionService(image);
 
   if (loading) {
-    return (
-      <SafeArea style={{ backgroundColor: "white" }}>
-        <Image
-          source={{ uri: imageBase64 }}
-          style={{ width: 200, height: 200 }}
-        />
-        <Text>Loading...</Text>
-      </SafeArea>
-    );
+    return <PredictionLoader image={imageBase64} />;
   }
 
+  //const prediction = [mockRecipePrediction];
+
   return (
-    <SafeArea style={{ backgroundColor: "white" }}>
+    <Container>
+      <HeaderImage source={{ uri: imageBase64 }} />
       <Text>Prediction</Text>
-      <Image
-        source={{ uri: imageBase64 }}
-        style={{ width: 200, height: 200 }}
-      />
-      {prediction?.map((item) => (
-        <>
-          <Text key={item.name}>{item.name}</Text>
-          {item.ingredients.map((ingredient) => (
-            <Text key={ingredient.name}>
-              {ingredient.name} - {ingredient.amountInGrams}g
-            </Text>
-          ))}
-        </>
-      ))}
-    </SafeArea>
+      <ContentContainer>
+        {prediction?.map((item) => (
+          <Recipe key={item.name} recipe={item} />
+        ))}
+      </ContentContainer>
+    </Container>
   );
 }
