@@ -7,6 +7,9 @@ export interface AIPromptConfig {
   format?: "json";
   system?: string;
   images?: string[];
+  options?: {
+    temperature?: number;
+  };
 }
 
 export interface RecipePrediction {
@@ -34,11 +37,11 @@ interface Macros {
 export const foodPredictionSystemPrompt = `You are an API for a mobile application that analyzes images of food. 
 Your task is to identify the recipe depicted in the image provided by the user, like an expert in the food and nutritional domain. 
 Only identify the food, ignore any other background distractions.
-If possible, give two suggestions for the recipe.
-You must return the recipes in the form of a JSON array, strictly following this format:
+If the picture only show an ingredient, then return the ingredient name and macros.
+You must return the recipes in the form of a JSON, strictly following this format:
 
 RESPONSE FORMAT:
-[
+
   {
     "name": string, // The name of the recipe
     "ingredients": [
@@ -54,9 +57,10 @@ RESPONSE FORMAT:
       }
     ]
   }
-]
 
-Do not include any additional text or explanations, only return the JSON array in the specified format.
-In case the image does not depict food, return an empty array.
+
+Try to be as accurate as possible.
+Do not include any additional text or explanations, only return the JSON in the specified format.
+In case the image does not depict food, return an empty JSON.
 Make sure the JSON is valid, and the keys are in the correct order.
 `;

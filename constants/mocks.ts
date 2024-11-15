@@ -21,6 +21,36 @@ export const mockIngredients = [
       carbs: 10,
     },
   },
+  {
+    name: "Ingredient 2",
+    amountInGrams: 50,
+    macros: {
+      calories: 100,
+      protein: 5,
+      fat: 2.5,
+      carbs: 10,
+    },
+  },
+  {
+    name: "Ingredient 2",
+    amountInGrams: 50,
+    macros: {
+      calories: 100,
+      protein: 5,
+      fat: 2.5,
+      carbs: 10,
+    },
+  },
+  {
+    name: "Ingredient 2",
+    amountInGrams: 50,
+    macros: {
+      calories: 100,
+      protein: 5,
+      fat: 2.5,
+      carbs: 10,
+    },
+  },
 ];
 
 export const mockRecipePrediction: RecipePrediction = {

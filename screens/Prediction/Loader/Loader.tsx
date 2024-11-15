@@ -1,12 +1,19 @@
 import { Skeleton } from "moti/skeleton";
-import { Container, ContentContainer, HeaderImage } from "../Prediction.style";
+import {
+  Container,
+  ContentContainer,
+  HeaderImage,
+  ImageContainer,
+} from "../Prediction.style";
 import { LoadingSpacer } from "./Loader.style";
 import { IPredictionLoader } from "./Loader.type";
 
 export default function PredictionLoader({ image }: IPredictionLoader) {
   return (
     <Container>
-      <HeaderImage source={{ uri: image }} />
+      <ImageContainer>
+        <HeaderImage source={{ uri: image }} />
+      </ImageContainer>
       <ContentContainer>
         <LoadingSpacer height={20} />
         <Skeleton colorMode="dark" width={250} height={60} />

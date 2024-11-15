@@ -12,7 +12,7 @@ async function generate(config: AIPromptConfig) {
     console.log(res.data);
     console.log(JSON.parse(res.data.response));
 
-    return [JSON.parse(res.data.response)] as RecipePrediction[];
+    return JSON.parse(res.data.response) as RecipePrediction;
   } catch (e) {
     console.error(e);
   }
@@ -20,11 +20,14 @@ async function generate(config: AIPromptConfig) {
 
 export default async function analyzeImage(image: string) {
   return generate({
-    model: "llava:13b",
+    model: "llama3.2-vision",
     stream: false,
     prompt: "Identify the recipe depicted in the image provided by the user.",
     format: "json",
     images: [image],
+    options: {
+      temperature: 0,
+    },
     system: foodPredictionSystemPrompt,
   });
 }
