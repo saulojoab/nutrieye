@@ -24,10 +24,7 @@ export const usePredictionService = (image: string) => {
   }
 
   async function addToLocalStorage(recipe: RecipePrediction) {
-    console.log("hello list");
     const storageRecipes = await AsyncStorage.getItem("recipes");
-
-    console.log("image", image);
 
     const filename = `${FileSystem.documentDirectory}${
       recipe.name
@@ -37,15 +34,11 @@ export const usePredictionService = (image: string) => {
       encoding: FileSystem.EncodingType.Base64,
     });
 
-    console.log("should be in FS", filename);
-
     try {
       await MediaLibrary.saveToLibraryAsync(filename);
     } catch (e) {
       console.error(e);
     }
-
-    console.log("should be saved");
 
     if (storageRecipes) {
       const recipes = JSON.parse(storageRecipes) ?? [];
@@ -67,9 +60,14 @@ export const usePredictionService = (image: string) => {
     getImagePrediction();
   }, []);
 
+  function goToHome() {
+    navigate("index" as never);
+  }
+
   return {
     loading,
     prediction,
     addToLocalStorage,
+    goToHome,
   };
 };

@@ -15,7 +15,6 @@ export const useMainService = () => {
 
     if (recipesFromStorage) {
       setRecipes(JSON.parse(recipesFromStorage));
-      console.log(JSON.parse(recipesFromStorage));
     }
   }
 

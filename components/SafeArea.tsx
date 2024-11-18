@@ -1,9 +1,9 @@
-import { Platform, StatusBar } from "react-native";
 import styled from "styled-components/native";
+import Constants from "expo-constants";
 
 const SafeArea = styled.SafeAreaView`
   flex: 1;
-  padding-top: ${Platform.OS === "android" ? StatusBar.currentHeight : 0}px;
+  padding-top: ${Constants.statusBarHeight}px;
 `;
 
 export default SafeArea;

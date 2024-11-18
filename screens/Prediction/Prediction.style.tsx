@@ -41,3 +41,11 @@ export const ButtonContainer = styled.View`
   justify-content: center;
   flex: 0.1;
 `;
+
+export const ImageControls = styled.View`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 10px;
+  position: absolute;
+`;

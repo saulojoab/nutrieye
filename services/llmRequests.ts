@@ -9,9 +9,6 @@ async function generate(config: AIPromptConfig) {
   try {
     const res = await api.post("api/generate", config);
 
-    console.log(res.data);
-    console.log(JSON.parse(res.data.response));
-
     return JSON.parse(res.data.response) as RecipePrediction;
   } catch (e) {
     console.error(e);
